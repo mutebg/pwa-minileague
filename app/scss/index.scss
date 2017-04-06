@@ -1,0 +1,168 @@
+body {
+  background: color('bg');
+  font-family: 'Roboto', sans-serif;;
+  color: color('dark');
+  font-size: 18px;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+
+.page {
+  position: relative;
+  max-height: calc(100vh - 56px);
+  width: 100%;
+  overflow-y: auto;
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.List {
+
+  &__item {
+    padding: 1em;
+    width: 100%;
+    border-top: 1px solid color('light-darken');
+    display: block;
+    text-align: left;
+    transition: 0.2s linear background;
+    will-change: background;
+
+    &--selected {
+      background: color('light-darken');
+      border-top: 1px solid color('light');
+    }
+  }
+
+  .Icon {
+    margin-right: 1em;
+  }
+}
+
+.RangList {
+  width: 100%;
+  padding: 0 1em;
+
+  th {
+    background: color('gray');
+  }
+
+  tr:nth-of-type(even) td {
+    background: color('light-darken');
+  }
+
+  td,
+  th {
+    padding: 1em 0.3em;
+    text-align: right;
+    &:first-of-type,
+    &:last-of-type {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+  }
+
+  .name {
+    text-align: left;
+  }
+}
+
+.Icon {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  color: #999;
+  background: color('gray');
+  line-height: 2em;
+  text-align: center;
+  object-fit: contain;
+  position: relative;
+  transition: 0.2s linear background;
+  will-change: background;
+
+  * {
+    transition: 0.2s linear opacity;
+  }
+
+  img {
+    max-width: 80%;
+    max-height: 80%;
+    vertical-align: middle;
+  }
+
+  span {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .mark {
+    opacity: 0;
+    width: 1.4em;
+    height: 1.4em;
+    display: block;
+    margin-top: -1.7em;
+    margin-left: .3em;
+    color: color('light');
+  }
+
+  &--checked {
+    background: color('dark');
+
+    .mark {
+      opacity: 1;
+    }
+    span,
+    img {
+      opacity: 0;
+    }
+  }
+}
+
+.Header {
+  color: color('light');
+  height: 56px;
+  line-height: 56px;
+  box-shadow: rgba(0,0,0,0.3) 0 0 4px;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: color('primary');
+  padding: 0 20px;
+  z-index: 1;
+  user-select: none;
+}
+
+.fab {
+  background: color('primary');
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.12), 0 4px 4px 0 rgba(0,0,0,0.24);
+  width: 56px;
+  height: 56px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  border-radius: 50%;
+  transition-duration: .2s;
+  transform: scale3d(1,1,1);
+  z-index: 1;
+  outline: none;
+  cursor: pointer;
+  color: color('light');
+
+  &--hide {
+    transform: scale(0);
+  }
+
+  svg {
+    width: 2em;
+    text-align: center;
+    margin: 10px;
+  }
+}
