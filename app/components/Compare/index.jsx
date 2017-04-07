@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { get } from '../../utils/api';
 import Header from '../Header';
+
 const parseID = url => Number(url.split('/').pop());
 
 export default class Compare extends Component {
@@ -14,7 +15,9 @@ export default class Compare extends Component {
 
   async componentWillMount() {
     const teamIDS = this.props.teams.split(':').map(Number);
-    const teamFixtures = await Promise.all(teamIDS.map(async id => get(`teams/${id}/fixtures/`)));
+    const teamFixtures = await Promise.all(
+      teamIDS.map(async id => await get(`teams/${id}/fixtures/`)),
+    );
     const teams = teamFixtures.map(team =>
       team.fixtures.filter((game) => {
         const awayID = parseID(game._links.awayTeam.href);
@@ -82,7 +85,7 @@ export default class Compare extends Component {
   }
 
   render(props, state) {
-    const { rangList } = this.state;
+    const { rangList } = state;
     return (
       <div class="Compare">
         <Header>Mini League</Header>
