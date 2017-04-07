@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import { route } from 'preact-router';
 import { get } from '../../utils/api';
 import Icon from '../Icon';
 
@@ -12,9 +12,11 @@ export default class Teams extends Component {
       teams: [],
       isLoading: true,
       selected: [],
+      riple: false,
     };
 
     this.setSelected = this.setSelected.bind(this);
+    this.handleNext = this.handleNext.bind(this);
   }
 
   async componentWillMount() {
@@ -41,11 +43,23 @@ export default class Teams extends Component {
     this.setState({ selected });
   }
 
+  handleNext() {
+    this.setState({
+      riple: true,
+    });
+
+    setTimeout(
+      () => {
+        route(`/compare?teams=${this.state.selected.join(':')}`);
+      },
+      300,
+    );
+  }
+
   render(props, state) {
-    const { teams, selected } = state;
-    console.log(`transfom: scale(${selected.length > 1 ? 1 : 0})`);
+    const { teams, selected, riple } = state;
     return (
-      <div class="Competitions List">
+      <div class="Teams List">
         {teams.map(({ crestUrl, name, _links: { self } }) => {
           const id = parseID(self.href);
           const checked = selected.indexOf(id) >= 0;
@@ -58,15 +72,16 @@ export default class Teams extends Component {
             </div>
           );
         })}
-        <Link
-          class={`fab ${selected.length > 1 ? '' : 'fab--hide'}`}
-          href={`/compare?teams=${selected.join(':')}`}
+        <button
+          onClick={this.handleNext}
+          class={`fab ${selected.length > 1 && !riple ? 'fab--show' : ''}`}
         >
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h24v24H0z" fill="none" />
             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor" />
           </svg>
-        </Link>
+        </button>
+        <div class={`fab-ripple ${riple ? 'fab-ripple--show' : ''}`} />
       </div>
     );
   }

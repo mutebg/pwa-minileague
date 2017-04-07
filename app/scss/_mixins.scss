@@ -213,3 +213,21 @@
 		src: url( quote($path) ) format("ttf");
 	}
 }
+
+@mixin show-with-fade() {
+  animation-name: fade-in;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-duration: 0.5s;
+}
+
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
