@@ -3,9 +3,21 @@ import Router from 'preact-router';
 import Competitions from './components/Competitions';
 import Teams from './components/Teams';
 import Compare from './components/Compare';
+import Header from './components/Header';
 
 import './scss/reset.scss';
 import './scss/index.scss';
+
+const headerContent = (url) => {
+  switch (url) {
+    case '/teams':
+      return { children: 'Select teams', back: true };
+    case '/compare':
+      return { children: 'Mini League', back: true };
+    default:
+      return { children: 'Select competition', back: false };
+  }
+};
 
 class Main extends Component {
   constructor(props) {
@@ -13,17 +25,21 @@ class Main extends Component {
 
     this.state = {
       isOffline: false,
+      url: '/',
     };
 
     this.onRouteChange = this.onRouteChange.bind(this);
     this.updateOnlineStatus = this.updateOnlineStatus.bind(this);
   }
 
-  onRouteChange() {
+  onRouteChange(param) {
     const pageElement = document.querySelector('.page');
     if (pageElement) {
       pageElement.scrollTop = 0;
     }
+    this.setState({
+      url: param.current.attributes.path,
+    });
   }
 
   updateOnlineStatus() {
@@ -34,13 +50,17 @@ class Main extends Component {
   }
 
   render() {
+    const headerData = headerContent(this.state.url);
     return (
       <div class="main">
-        <Router onChange={this.onRouteChange}>
-          <Competitions path="/" />
-          <Teams path="/teams" />
-          <Compare path="/compare" />
-        </Router>
+        <Header {...headerData} />
+        <div class="page">
+          <Router onChange={this.onRouteChange}>
+            <Competitions path="/" />
+            <Teams path="/teams" />
+            <Compare path="/compare" />
+          </Router>
+        </div>
       </div>
     );
   }

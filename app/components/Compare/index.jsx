@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import { get } from '../../utils/api';
-import Header from '../Header';
 
 const parseID = url => Number(url.split('/').pop());
 
@@ -88,8 +87,7 @@ export default class Compare extends Component {
     const { rangList } = state;
     return (
       <div class="Compare">
-        <Header>Mini League</Header>
-        <table class="RangList page">
+        <table class="RangList">
           <tr>
             <th>#</th>
             <th />
