@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import { get } from '../../utils/api';
+import Store from '../../utils/store';
 import Icon from '../Icon';
 
 export default class Competitions extends Component {
@@ -14,15 +15,16 @@ export default class Competitions extends Component {
   }
 
   async componentWillMount() {
-    try {
-      const competitions = await get('competitions/');
-      this.setState({
-        competitions,
-        isLoading: false,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    // load data from db
+    Store.get('competitions').then(competitions => this.setState({ competitions }));
+    // fetch data from web
+    const competitions = await get('competitions/');
+    this.setState({
+      competitions,
+      isLoading: false,
+    });
+    // save data to db
+    Store.set('competitions', competitions);
   }
 
   handleClick(id, selectedIndex) {
@@ -47,6 +49,7 @@ export default class Competitions extends Component {
 
   render(props, state) {
     const { competitions, inTransition } = state;
+    if (!competitions) return null;
     return (
       <div class="Competitions List">
         {competitions.map(({ id, caption }, index) => {

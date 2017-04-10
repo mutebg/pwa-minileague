@@ -32,6 +32,11 @@ class Main extends Component {
     this.updateOnlineStatus = this.updateOnlineStatus.bind(this);
   }
 
+  componentDidMount() {
+    window.addEventListener('online', this.updateOnlineStatus);
+    window.addEventListener('offline', this.updateOnlineStatus);
+  }
+
   onRouteChange(param) {
     const pageElement = document.querySelector('.page');
     if (pageElement) {

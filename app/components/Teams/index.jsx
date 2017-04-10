@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import { get } from '../../utils/api';
+import Store from '../../utils/store';
 import Icon from '../Icon';
 
 const parseID = url => Number(url.split('/').pop());
@@ -21,15 +22,16 @@ export default class Teams extends Component {
 
   async componentWillMount() {
     const { id } = this.props;
-    try {
-      const { teams } = await get(`competitions/${id}/teams`);
-      this.setState({
-        teams,
-        isLoading: false,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    // load data from db
+    Store.get(`team/${id}`).then(teams => this.setState({ teams }));
+    // fetch data from web
+    const { teams } = await get(`competitions/${id}/teams`);
+    this.setState({
+      teams,
+      isLoading: false,
+    });
+    // save data to db
+    Store.set(`team/${id}`, teams);
   }
 
   setSelected(id) {
@@ -58,6 +60,7 @@ export default class Teams extends Component {
 
   render(props, state) {
     const { teams, selected, riple } = state;
+    if (!teams) return null;
     return (
       <div class="Teams List">
         {teams.map(({ crestUrl, name, _links: { self } }) => {

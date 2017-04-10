@@ -81,6 +81,9 @@ export default class Compare extends Component {
     ).sort((a, b) => a.points < b.points);
 
     this.setState({ rangList });
+
+    // save data to db
+    // Store.set(`rangList/${teamIDS.sort()}`, rangList);
   }
 
   render(props, state) {

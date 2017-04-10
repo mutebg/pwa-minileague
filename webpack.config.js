@@ -108,7 +108,6 @@ if (TARGET === 'build') {
           new ExtractTextPlugin("styles.[hash].css"),
           new webpack.optimize.OccurenceOrderPlugin(),
           new webpack.optimize.AggressiveMergingPlugin(),
-          new BundleAnalyzerPlugin()
         ]
     });
 }
