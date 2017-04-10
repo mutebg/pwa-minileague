@@ -14,7 +14,13 @@
 <body>
   <% if (htmlWebpackPlugin.options.appMountId) { %>
   <div id="<%=htmlWebpackPlugin.options.appMountId%>">
-    
+    <div class="Header">
+      <button class="Header__btn"></button>
+      <div class="Header__title">Select competition</div>
+    </div>
+    <div class="List">
+      <div class="List__item">Loading content</div>
+    </div>
   </div>
   <% } %>
 

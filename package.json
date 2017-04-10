@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "idb-keyval": "^2.3.0",
-    "preact": "^7.2.1",
+    "preact": "^8.1.0",
     "preact-router": "^2.4.1",
     "sw-toolbox": "^3.6.0"
   }
